@@ -5,85 +5,100 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Stereo L 88.5 FM</title>
 
-<!-- PWA / Modo app -->
 <meta name="theme-color" content="#0a1f44">
-<link rel="manifest" href="manifest.json">
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
-}
-
 body{
-background:linear-gradient(180deg,#06142e,#0a1f44);
+margin:0;
+font-family:Arial, sans-serif;
+background:#06142e;
 color:white;
 text-align:center;
 }
 
 /* HEADER */
 header{
-padding:30px 15px;
+padding:20px;
+background:linear-gradient(180deg,#0a1f44,#102a5c);
 }
 
 .logo{
-width:180px;
-border-radius:20px;
-box-shadow:0 10px 30px rgba(0,0,0,.4);
+width:140px;
+border-radius:15px;
 }
 
 h1{
-font-size:40px;
 color:#ffd700;
-margin-top:10px;
+margin:10px 0 0;
 }
 
 h2{
-font-size:16px;
-opacity:.9;
+font-size:14px;
+opacity:.8;
 }
 
-/* PLAYER */
+/* HERO */
+.hero{
+width:100%;
+height:220px;
+object-fit:cover;
+filter:brightness(.8);
+}
+
+/* PLAYER APP */
 .player{
 width:92%;
 max-width:420px;
-margin:20px auto;
+margin:-40px auto 20px;
 background:rgba(255,255,255,0.08);
-backdrop-filter:blur(10px);
+backdrop-filter:blur(12px);
+border-radius:25px;
 padding:20px;
-border-radius:20px;
-box-shadow:0 10px 30px rgba(0,0,0,.4);
+box-shadow:0 10px 30px rgba(0,0,0,.6);
 }
 
-.cover{
-width:100%;
-border-radius:15px;
-margin-bottom:10px;
-}
-
-.status{
-font-size:14px;
-color:#ffd700;
-margin-bottom:10px;
-}
-
-.song{
-font-size:18px;
+/* PLAY BUTTON */
+.play-btn{
+width:80px;
+height:80px;
+border-radius:50%;
+border:none;
+background:#ffd700;
+font-size:30px;
 font-weight:bold;
-margin-top:5px;
+cursor:pointer;
+margin:10px auto;
+}
+
+/* STATUS */
+.status{
+color:#00ff99;
+font-weight:bold;
+margin-bottom:10px;
+}
+
+/* SONG INFO */
+.song{
+font-size:20px;
+font-weight:bold;
+margin-top:10px;
 }
 
 .artist{
 font-size:14px;
 opacity:.8;
+margin-bottom:10px;
 }
 
-/* BOTONES */
+/* AUDIO HIDDEN */
+audio{
+display:none;
+}
+
+/* BUTTONS */
 .buttons{
 width:92%;
-max-width:500px;
+max-width:420px;
 margin:20px auto;
 display:grid;
 gap:10px;
@@ -91,16 +106,11 @@ gap:10px;
 
 .buttons a{
 background:#ffd700;
-color:#0a1f44;
-padding:14px;
+color:#000;
+padding:12px;
+border-radius:12px;
 text-decoration:none;
 font-weight:bold;
-border-radius:12px;
-transition:.3s;
-}
-
-.buttons a:hover{
-transform:scale(1.03);
 }
 
 /* FOOTER */
@@ -108,7 +118,7 @@ footer{
 margin-top:20px;
 padding:15px;
 background:#ffd700;
-color:#0a1f44;
+color:#000;
 font-weight:bold;
 }
 </style>
@@ -120,20 +130,22 @@ font-weight:bold;
 <img class="logo" src="https://cdn.phototourl.com/free/2026-06-18-313aac64-7113-49e3-bfab-160be1a70e1c.png">
 <h1>Stereo L</h1>
 <h2>88.5 FM - Tumbes</h2>
-<h2>Una Señal de Líderes</h2>
 </header>
 
-<!-- PLAYER PRO -->
-<div class="player">
+<!-- IMAGEN CIUDAD -->
+<img class="hero" src="http://imgfz.com/i/NGiaBK3.png">
 
-<img class="cover" src="https://kommodo.ai/i/850zzKtEqvTrYyv211FW" alt="Tumbes">
+<!-- PLAYER -->
+<div class="player">
 
 <div class="status">🔴 EN VIVO</div>
 
-<div class="song" id="title">Cargando canción...</div>
+<div class="song" id="song">Cargando canción...</div>
 <div class="artist" id="artist">Stereo L 88.5 FM</div>
 
-<audio id="radio" autoplay controls>
+<button class="play-btn" onclick="toggleRadio()">▶</button>
+
+<audio id="radio">
 <source src="https://radiostreaming.pro/8234/stream" type="audio/mpeg">
 </audio>
 
@@ -141,50 +153,79 @@ font-weight:bold;
 
 <!-- BOTONES -->
 <div class="buttons">
-
 <a href="https://wa.me/51974421529">📱 WhatsApp</a>
-<a href="#">🎵 Pide tu canción</a>
+<a href="#">🎵 Pedir canción</a>
 <a href="#">📢 Publicidad</a>
-<a href="#">📻 Programación</a>
-
 </div>
 
 <footer>
-Stereo L 88.5 FM - 2026
+Stereo L 88.5 FM © 2026
 </footer>
 
 <script>
-// MEDIA SESSION (clave para que no se corte fácil en móvil)
-if ('mediaSession' in navigator) {
-navigator.mediaSession.metadata = new MediaMetadata({
-title: 'Stereo L 88.5 FM',
-artist: 'En Vivo desde Tumbes',
-artwork: [
-{ src: 'https://kommodo.ai/i/850zzKtEqvTrYyv211FW', sizes: '512x512', type: 'image/png' }
-]
+
+let radio = document.getElementById("radio");
+let isPlaying = false;
+
+/* PLAY / PAUSE */
+function toggleRadio(){
+
+if(isPlaying){
+radio.pause();
+isPlaying = false;
+document.querySelector(".play-btn").innerHTML = "▶";
+}else{
+radio.play();
+isPlaying = true;
+document.querySelector(".play-btn").innerHTML = "⏸";
+}
+
+}
+
+/* 🔥 METADATA REAL */
+async function loadMetadata(){
+
+try{
+
+const res = await fetch("https://radiostreaming.pro/cp/get_info.php?p=8234");
+const data = await res.json();
+
+let song = data.song || data.title || "";
+
+/* separar artista - canción */
+if(song.includes("-")){
+let parts = song.split("-");
+document.getElementById("artist").innerText = parts[0].trim();
+document.getElementById("song").innerText = parts[1].trim();
+}else{
+document.getElementById("song").innerText = song || "Stereo L en vivo";
+}
+
+}catch(e){
+console.log("metadata error");
+}
+
+}
+
+loadMetadata();
+setInterval(loadMetadata, 5000);
+
+/* 🔔 NOTIFICACIÓN DE CANCIÓN */
+function notify(song){
+
+if("Notification" in window && Notification.permission === "granted"){
+new Notification("🎧 Stereo L 88.5 FM",{
+body:song
 });
 }
 
-// INTENTO DE METADATA (puedes conectar RadioBOSS luego)
-async function updateSong() {
-try {
-// Aquí luego puedes conectar RadioBOSS / AzuraCast / Icecast JSON
-// Ejemplo simulado:
-let data = {
-title: "En vivo - Stereo L",
-artist: "Tumbes Perú"
-};
-
-document.getElementById("title").innerText = data.title;
-document.getElementById("artist").innerText = data.artist;
-
-} catch (e) {
-console.log("No metadata");
-}
 }
 
-updateSong();
-setInterval(updateSong, 15000);
+/* pedir permiso notificaciones */
+if("Notification" in window){
+Notification.requestPermission();
+}
+
 </script>
 
 </body>
