@@ -35,9 +35,10 @@ margin:10px 0 0;
 h2{
 font-size:14px;
 opacity:.8;
+margin:5px 0;
 }
 
-/* HERO */
+/* HERO IMAGE */
 .hero{
 width:100%;
 height:200px;
@@ -54,35 +55,6 @@ backdrop-filter:blur(12px);
 border-radius:25px;
 padding:20px;
 box-shadow:0 10px 30px rgba(0,0,0,.6);
-}
-
-/* PLAY SECTION */
-.play-row{
-display:flex;
-align-items:center;
-justify-content:center;
-gap:12px;
-margin-top:10px;
-}
-
-/* PLAY BUTTON */
-.play-btn{
-width:75px;
-height:75px;
-border-radius:50%;
-border:none;
-background:#ffd700;
-font-size:28px;
-font-weight:bold;
-cursor:pointer;
-}
-
-/* TEXT PLAY */
-.play-text{
-text-align:left;
-font-size:13px;
-opacity:.9;
-line-height:1.3;
 }
 
 /* STATUS */
@@ -105,7 +77,41 @@ opacity:.8;
 margin-bottom:10px;
 }
 
-/* HISTORIAL */
+/* PLAY ROW */
+.play-row{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:12px;
+margin-top:10px;
+}
+
+/* PLAY BUTTON */
+.play-btn{
+width:75px;
+height:75px;
+border-radius:50%;
+border:none;
+background:#ffd700;
+font-size:28px;
+font-weight:bold;
+cursor:pointer;
+}
+
+/* TEXT */
+.play-text{
+text-align:left;
+font-size:13px;
+opacity:.9;
+line-height:1.3;
+}
+
+/* AUDIO */
+audio{
+display:none;
+}
+
+/* HISTORY */
 .history{
 width:92%;
 max-width:420px;
@@ -125,11 +131,6 @@ padding:10px;
 border-radius:10px;
 margin-bottom:6px;
 font-size:13px;
-}
-
-/* AUDIO */
-audio{
-display:none;
 }
 
 /* BUTTONS */
@@ -169,7 +170,7 @@ font-weight:bold;
 <h2>88.5 FM - Tumbes</h2>
 </header>
 
-<!-- IMAGEN -->
+<!-- IMAGEN CIUDAD -->
 <img class="hero" src="http://imgfz.com/i/NGiaBK3.png">
 
 <!-- PLAYER -->
@@ -217,35 +218,6 @@ Stereo L 88.5 FM © 2026
 let radio = document.getElementById("radio");
 let isPlaying = false;
 
-/* HISTORIAL DE CANCIONES */
-let historyList = [];
-
-function addHistory(song){
-
-if(!song) return;
-
-/* evita duplicados seguidos */
-if(historyList[0] === song) return;
-
-historyList.unshift(song);
-
-if(historyList.length > 5){
-historyList.pop();
-}
-
-renderHistory();
-}
-
-function renderHistory(){
-let html = "";
-
-historyList.forEach(item=>{
-html += `<div class="item">🎵 ${item}</div>`;
-});
-
-document.getElementById("history").innerHTML = html;
-}
-
 /* PLAY */
 function toggleRadio(){
 
@@ -259,6 +231,43 @@ isPlaying = true;
 document.querySelector(".play-btn").innerHTML = "⏸";
 }
 
+}
+
+/* HISTORIAL (10 CANCIONES) */
+let historyList = JSON.parse(localStorage.getItem("stereo_l_history")) || [];
+
+renderHistory();
+
+function addHistory(song){
+
+if(!song) return;
+
+/* evitar repetido inmediato */
+if(historyList[0] === song) return;
+
+/* agregar */
+historyList.unshift(song);
+
+/* 🔥 máximo 10 */
+if(historyList.length > 10){
+historyList = historyList.slice(0, 10);
+}
+
+/* guardar */
+localStorage.setItem("stereo_l_history", JSON.stringify(historyList));
+
+renderHistory();
+}
+
+function renderHistory(){
+
+let html = "";
+
+historyList.forEach(item=>{
+html += `<div class="item">🎵 ${item}</div>`;
+});
+
+document.getElementById("history").innerHTML = html;
 }
 
 /* METADATA */
@@ -279,7 +288,6 @@ let title = parts[1].trim();
 document.getElementById("artist").innerText = artist;
 document.getElementById("song").innerText = title;
 
-/* historial */
 addHistory(artist + " - " + title);
 
 }else{
