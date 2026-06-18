@@ -5,264 +5,81 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Stereo L 88.5 FM</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-
 <style>
 
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:'Poppins',sans-serif;
+font-family:Arial,sans-serif;
 }
 
 body{
-
-background:linear-gradient(135deg,#010b1c,#003366,#0066cc);
-
-overflow-x:hidden;
-
+background:#0a1f44;
 color:white;
-
 text-align:center;
-
-}
-
-body:before{
-
-content:"";
-
-position:fixed;
-
-width:200%;
-
-height:200%;
-
-left:-50%;
-
-top:-50%;
-
-background:
-radial-gradient(circle,#00ffff22 1px,transparent 2px);
-
-background-size:50px 50px;
-
-animation:fondo 20s linear infinite;
-
-z-index:-1;
-
-}
-
-@keyframes fondo{
-
-0%{
-transform:rotate(0deg);
-}
-
-100%{
-transform:rotate(360deg);
-}
-
 }
 
 header{
-
-padding:30px;
-
+background:linear-gradient(#0a1f44,#1d4ed8);
+padding:40px 20px;
 }
 
 .logo{
-
-width:220px;
-
-height:220px;
-
-border-radius:50%;
-
-box-shadow:0 0 40px cyan;
-
-animation:logo 3s infinite alternate;
-
-}
-
-@keyframes logo{
-
-from{
-transform:scale(1) rotate(-3deg);
-}
-
-to{
-transform:scale(1.05) rotate(3deg);
-}
-
+width:250px;
+max-width:90%;
+border-radius:20px;
 }
 
 h1{
-
-font-size:60px;
-
-color:#FFD700;
-
 margin-top:20px;
-
+font-size:45px;
+color:#ffd700;
 }
 
-.sub{
-
-font-size:22px;
-
-margin-top:10px;
-
-}
-
-.live{
-
-display:inline-block;
-
-margin-top:20px;
-
-padding:10px 25px;
-
-background:red;
-
-border-radius:30px;
-
-font-weight:bold;
-
-animation:live 1s infinite;
-
-}
-
-@keyframes live{
-
-50%{
-opacity:.5;
-}
-
-}
-
-.player{
-
-width:95%;
-
-max-width:500px;
-
-margin:auto;
-
-margin-top:40px;
-
-padding:30px;
-
-border-radius:25px;
-
-background:rgba(255,255,255,.1);
-
-backdrop-filter:blur(15px);
-
-box-shadow:0 0 30px #00ffff55;
-
-}
-
-.play{
-
-width:100px;
-
-height:100px;
-
-border:none;
-
-border-radius:50%;
-
-background:#1DB954;
-
-font-size:40px;
-
-color:white;
-
-cursor:pointer;
-
-box-shadow:0 0 30px #1DB954;
-
-}
-
-.pause{
-
-width:70px;
-
-height:70px;
-
-border:none;
-
-border-radius:50%;
-
-background:#ff4444;
-
-font-size:25px;
-
-color:white;
-
-cursor:pointer;
-
-margin-left:15px;
-
-}
-
-input{
-
-width:80%;
-
-margin-top:25px;
-
-}
-
-.whatsapp{
-
-position:fixed;
-
-bottom:20px;
-
-right:20px;
-
-background:#25D366;
-
-padding:15px 20px;
-
-border-radius:50px;
-
-text-decoration:none;
-
-color:white;
-
-font-weight:bold;
-
-box-shadow:0 0 20px #25D366;
-
-}
-
-.info{
-
-width:90%;
-
-max-width:900px;
-
-margin:auto;
-
-margin-top:50px;
-
+h2{
 font-size:20px;
+margin-top:10px;
+}
 
-line-height:35px;
+.radio{
+background:white;
+color:#0a1f44;
+width:90%;
+max-width:500px;
+margin:30px auto;
+padding:25px;
+border-radius:15px;
+}
 
+audio{
+width:100%;
+}
+
+.botones{
+width:90%;
+max-width:600px;
+margin:auto;
+display:grid;
+gap:10px;
+padding:20px;
+}
+
+.botones a{
+background:#ffd700;
+color:#0a1f44;
+padding:15px;
+text-decoration:none;
+font-weight:bold;
+border-radius:10px;
 }
 
 footer{
-
-margin-top:50px;
-
-padding:25px;
-
-background:#000;
-
+margin-top:30px;
+background:#ffd700;
+color:#0a1f44;
+padding:15px;
+font-weight:bold;
 }
 
 </style>
@@ -273,123 +90,71 @@ background:#000;
 
 <header>
 
-<img src="https://cdn.phototourl.com/free/2026-06-18-313aac64-7113-49e3-bfab-160be1a70e1c.png" class="logo">
+<img class="logo" src="https://cdn.phototourl.com/free/2026-06-18-313aac64-7113-49e3-bfab-160be1a70e1c.png">
 
-<h1>STEREO L</h1>
+<h1>Stereo L</h1>
 
-<div class="sub">
+<h2>88.5 FM</h2>
 
-88.5 FM
-
-</div>
-
-<div class="sub">
-
-UNA SEÑAL DE LÍDERES
-
-</div>
-
-<div class="live">
-
-🔴 EN VIVO
-
-</div>
+<h2>Una Señal de Líderes</h2>
 
 </header>
 
-<div class="player">
+<div class="radio">
 
-<h2>
-
-🎙 ESCÚCHANOS EN VIVO
-
-</h2>
+<h2>🔴 ESCÚCHANOS EN VIVO</h2>
 
 <br>
 
-<audio id="radio">
+<audio controls autoplay>
 
 <source src="https://sonic.globalstream.pro/8040/stream" type="audio/mpeg">
 
 </audio>
 
-<button class="play" onclick="radio.play()">
-
-▶
-
-</button>
-
-<button class="pause" onclick="radio.pause()">
-
-❚❚
-
-</button>
-
-<br>
-
-<input type="range"
-
-min="0"
-
-max="1"
-
-step="0.1"
-
-value="1"
-
-oninput="radio.volume=this.value">
-
-<p>
-
-🔊 Volumen
-
-</p>
-
 </div>
 
-<div class="info">
+<div class="botones">
 
-<h2>
+<a href="https://wa.me/51974421529">
 
-Bienvenidos
-
-</h2>
-
-<br>
-
-Radio Stereo L 88.5 FM transmite las 24 horas para todos sus oyentes.
-
-</div>
-
-<a class="whatsapp"
-
-href="https://wa.me/51974421529">
-
-WhatsApp
+📱 WhatsApp
 
 </a>
+
+<a href="#">
+
+📻 Programación
+
+</a>
+
+<a href="#">
+
+🎵 Pide tu canción
+
+</a>
+
+<a href="#">
+
+📢 Publicidad
+
+</a>
+
+</div>
 
 <footer>
 
 Stereo L 88.5 FM
 
-<br><br>
+<br>
 
-📱 974421529
+© 2026
 
-<br><br>
+<br>
 
-© 2026 Todos los derechos reservados.
+Diseño Web
 
 </footer>
-
-<script>
-
-var radio=document.getElementById("radio");
-
-radio.volume=1;
-
-</script>
 
 </body>
 </html>
